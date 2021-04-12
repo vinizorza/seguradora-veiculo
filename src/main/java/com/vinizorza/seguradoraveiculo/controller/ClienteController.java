@@ -1,8 +1,7 @@
 package com.vinizorza.seguradoraveiculo.controller;
 
 import com.vinizorza.seguradoraveiculo.model.Cliente;
-import com.vinizorza.seguradoraveiculo.repository.ClienteRepository;
-import com.vinizorza.seguradoraveiculo.service.SequenceGeneratorService;
+import com.vinizorza.seguradoraveiculo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,31 +12,26 @@ import java.util.List;
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private SequenceGeneratorService sequenceGeneratorService;
+    private ClienteService clienteService;
 
     @PostMapping("/cliente")
     public void create(@Valid @RequestBody Cliente cliente){
-        if(cliente.getId() == null)
-            cliente.setId(sequenceGeneratorService.generateSequence(Cliente.SEQUENCE_NAME));
-        clienteRepository.save(cliente);
+        clienteService.create(cliente);
     }
 
     @GetMapping("/cliente")
     public List<Cliente> list(){
-        return clienteRepository.findAll();
+       return clienteService.list();
     }
 
     @GetMapping("/cliente/{id}")
     public Cliente getById(@PathVariable Long id){
-        return clienteRepository.findById(id).get();
+        return clienteService.getById(id);
     }
 
     @DeleteMapping("/cliente/{id}")
     public void deleteById(@PathVariable Long id){
-        clienteRepository.deleteById(id);
+        clienteService.deleteById(id);
     }
 
 }
