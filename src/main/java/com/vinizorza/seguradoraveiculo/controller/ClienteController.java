@@ -20,7 +20,8 @@ public class ClienteController {
 
     @PostMapping("/cliente")
     public void create(@Valid @RequestBody Cliente cliente){
-        cliente.setId(sequenceGeneratorService.generateSequence(Cliente.SEQUENCE_NAME));
+        if(cliente.getId() == null)
+            cliente.setId(sequenceGeneratorService.generateSequence(Cliente.SEQUENCE_NAME));
         clienteRepository.save(cliente);
     }
 
@@ -30,12 +31,12 @@ public class ClienteController {
     }
 
     @GetMapping("/cliente/{id}")
-    public Cliente getById(@PathVariable int id){
+    public Cliente getById(@PathVariable Long id){
         return clienteRepository.findById(id).get();
     }
 
     @DeleteMapping("/cliente/{id}")
-    public void deleteById(@PathVariable int id){
+    public void deleteById(@PathVariable Long id){
         clienteRepository.deleteById(id);
     }
 
