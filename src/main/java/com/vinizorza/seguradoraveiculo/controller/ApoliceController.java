@@ -1,5 +1,6 @@
 package com.vinizorza.seguradoraveiculo.controller;
 
+import com.vinizorza.seguradoraveiculo.dto.ApoliceCompletaDTO;
 import com.vinizorza.seguradoraveiculo.dto.ApoliceDTO;
 import com.vinizorza.seguradoraveiculo.model.Apolice;
 import com.vinizorza.seguradoraveiculo.service.ApoliceService;
@@ -28,6 +29,11 @@ public class ApoliceController {
     @GetMapping("/apolice/{id}")
     public ApoliceDTO getById(@PathVariable Long id){
         return apoliceService.getById(id);
+    }
+
+    @GetMapping("/apoliceCompleta/{id}")
+    public ApoliceCompletaDTO getCompletaById(@PathVariable Long id){
+        return apoliceService.getCompletaById(id);
     }
 
     @DeleteMapping("/apolice/{id}")

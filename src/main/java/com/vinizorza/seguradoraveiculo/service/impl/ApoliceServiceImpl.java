@@ -1,5 +1,6 @@
 package com.vinizorza.seguradoraveiculo.service.impl;
 
+import com.vinizorza.seguradoraveiculo.dto.ApoliceCompletaDTO;
 import com.vinizorza.seguradoraveiculo.dto.ApoliceDTO;
 import com.vinizorza.seguradoraveiculo.exception.BadRequestException;
 import com.vinizorza.seguradoraveiculo.model.Apolice;
@@ -48,13 +49,19 @@ public class ApoliceServiceImpl implements ApoliceService {
         return ApoliceDTO.from(apoliceRepository.findAll());
     }
 
-    public ApoliceDTO getById(Long numero){
-        validateApoliceExistente(numero);
-        return ApoliceDTO.from(apoliceRepository.findById(numero).get());
+    public ApoliceDTO getById(Long id){
+        validateApoliceExistente(id);
+        return ApoliceDTO.from(apoliceRepository.findById(id).get());
     }
 
-    public void deleteById(Long numero){
-        validateApoliceExistente(numero);
-        apoliceRepository.deleteById(numero);
+    @Override
+    public ApoliceCompletaDTO getCompletaById(Long id) {
+        validateApoliceExistente(id);
+        return ApoliceCompletaDTO.from(apoliceRepository.findById(id).get());
+    }
+
+    public void deleteById(Long id){
+        validateApoliceExistente(id);
+        apoliceRepository.deleteById(id);
     }
 }

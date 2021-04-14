@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Document(collection = "apolice")
@@ -81,4 +83,16 @@ public class Apolice {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public boolean isVencida(){
+        return this.vigenciaFim.before(new Date());
+    }
+
+    public long getDiasRestantes(){
+        return ChronoUnit.DAYS.between(
+                new java.sql.Date((new Date()).getTime()).toLocalDate(),
+                new java.sql.Date(this.vigenciaFim.getTime()).toLocalDate());
+    }
+
+
 }
