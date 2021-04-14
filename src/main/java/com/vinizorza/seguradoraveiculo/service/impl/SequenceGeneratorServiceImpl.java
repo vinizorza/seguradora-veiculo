@@ -5,6 +5,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
 import java.util.Objects;
+import java.util.Random;
 
 import com.vinizorza.seguradoraveiculo.model.DatabaseSequence;
 import com.vinizorza.seguradoraveiculo.service.SequenceGeneratorService;
@@ -26,9 +27,13 @@ public class SequenceGeneratorServiceImpl implements SequenceGeneratorService {
     public long generateSequence(String sequenceName) {
 
         DatabaseSequence counter = mongoOperations.findAndModify(query(where("_id").is(sequenceName)),
-                new Update().inc("seq",1), options().returnNew(true).upsert(true),
+                new Update().inc("seq",generateRandomInt(100)), options().returnNew(true).upsert(true),
                 DatabaseSequence.class);
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
+    }
 
+    public static int generateRandomInt(int upperRange){
+        Random random = new Random();
+        return random.nextInt(upperRange);
     }
 }
