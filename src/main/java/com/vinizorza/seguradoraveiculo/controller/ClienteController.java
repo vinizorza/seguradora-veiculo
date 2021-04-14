@@ -1,5 +1,6 @@
 package com.vinizorza.seguradoraveiculo.controller;
 
+import com.vinizorza.seguradoraveiculo.dto.ClienteDTO;
 import com.vinizorza.seguradoraveiculo.model.Cliente;
 import com.vinizorza.seguradoraveiculo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ public class ClienteController {
     }
 
     @GetMapping("/cliente")
-    public List<Cliente> list(){
+    public List<ClienteDTO> list(){
        return clienteService.list();
     }
 
     @GetMapping("/cliente/{id}")
-    public Cliente getById(@PathVariable Long id){
+    public ClienteDTO getById(@PathVariable Long id){
         return clienteService.getById(id);
     }
 

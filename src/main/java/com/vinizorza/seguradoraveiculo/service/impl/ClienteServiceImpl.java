@@ -1,6 +1,7 @@
 package com.vinizorza.seguradoraveiculo.service.impl;
 
 import br.com.caelum.stella.validation.CPFValidator;
+import com.vinizorza.seguradoraveiculo.dto.ClienteDTO;
 import com.vinizorza.seguradoraveiculo.exception.BadRequestException;
 import com.vinizorza.seguradoraveiculo.model.Cliente;
 import com.vinizorza.seguradoraveiculo.repository.ClienteRepository;
@@ -31,6 +32,8 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     private void validateClienteExistente(Long id) {
+        if(!clienteRepository.findById(id).isPresent())
+            throw new BadRequestException("Id do cliente inválido");
     }
 
     private void validateCpf(String cpf) {
@@ -38,19 +41,21 @@ public class ClienteServiceImpl implements ClienteService {
         try{
             cpfValidator.assertValid(cpf);
         }catch (Exception e){
-            throw new BadRequestException("Cpf Inválido");
+            throw new BadRequestException("Cpf inválido");
         }
     }
 
-    public List<Cliente> list(){
-        return clienteRepository.findAll();
+    public List<ClienteDTO> list(){
+        return ClienteDTO.from(clienteRepository.findAll());
     }
 
-    public Cliente getById(Long id){
-        return clienteRepository.findById(id).get();
+    public ClienteDTO getById(Long id){
+        validateClienteExistente(id);
+        return ClienteDTO.from(clienteRepository.findById(id).get());
     }
 
     public void deleteById(Long id){
+        validateClienteExistente(id);
         clienteRepository.deleteById(id);
     }
 }

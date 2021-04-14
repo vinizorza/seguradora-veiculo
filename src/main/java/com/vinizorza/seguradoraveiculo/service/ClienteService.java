@@ -1,5 +1,6 @@
 package com.vinizorza.seguradoraveiculo.service;
 
+import com.vinizorza.seguradoraveiculo.dto.ClienteDTO;
 import com.vinizorza.seguradoraveiculo.model.Cliente;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
@@ -10,9 +11,9 @@ public interface ClienteService {
 
     void create(Cliente cliente);
 
-    List<Cliente> list();
+    List<ClienteDTO> list();
 
-    Cliente getById(Long id);
+    ClienteDTO getById(Long id);
 
     void deleteById(Long id);
 
